@@ -1,0 +1,73 @@
+import os
+
+M8FLOW_TO_SPIFF = {
+    # ------------------------
+    # Core environment / logging
+    # ------------------------
+    "M8FLOW_ENV": "SPIFFWORKFLOW_BACKEND_ENV",
+    "M8FLOW_LOG_LEVEL": "SPIFFWORKFLOW_BACKEND_LOG_LEVEL",
+    "M8FLOW_WATCHFILES_FORCE_POLLING": "WATCHFILES_FORCE_POLLING",
+
+    # ------------------------
+    # Flask / backend runtime
+    # ------------------------
+    "M8FLOW_FLASK_DEBUG": "FLASK_DEBUG",
+    "M8FLOW_FLASK_ENV": "FLASK_ENV",
+    "M8FLOW_FLASK_APP": "FLASK_APP",
+    "M8FLOW_SESSION_SECRET_KEY": "FLASK_SESSION_SECRET_KEY",
+
+    # ------------------------
+    # Database (Postgres + SQLAlchemy)
+    # ------------------------
+    "M8FLOW_DB_USER": "POSTGRES_USER",
+    "M8FLOW_DB_PASSWORD": "POSTGRES_PASSWORD",
+    "M8FLOW_DB_NAME": "POSTGRES_DB",
+
+    "M8FLOW_DATABASE_TYPE": "SPIFFWORKFLOW_BACKEND_DATABASE_TYPE",
+    "M8FLOW_DATABASE_URI": "SPIFFWORKFLOW_BACKEND_DATABASE_URI",
+    "M8FLOW_DATABASE_UPGRADE": "SPIFFWORKFLOW_BACKEND_UPGRADE_DB",
+
+    # ------------------------
+    # Network / URLs / ports
+    # ------------------------
+    "M8FLOW_BACKEND_PORT": "SPIFFWORKFLOW_BACKEND_PORT",
+    "M8FLOW_BACKEND_URL": "SPIFFWORKFLOW_BACKEND_URL",
+    "M8FLOW_BACKEND_URL_FOR_FRONTEND": "SPIFFWORKFLOW_BACKEND_URL_FOR_FRONTEND",
+    "M8FLOW_BACKEND_URL_FRONTEND": "SPIFFWORKFLOW_BACKEND_URL_FRONTEND",
+
+    # ------------------------
+    # BPMN / process models
+    # ------------------------
+    "M8FLOW_BPMN_MODELS_DIR": "SPIFFWORKFLOW_BACKEND_BPMN_SPEC_ABSOLUTE_DIR",
+
+    # ------------------------
+    # Auth / OIDC / Keycloak
+    # ------------------------
+    "M8FLOW_OIDC_SERVER_URL": "SPIFFWORKFLOW_BACKEND_OPEN_ID_SERVER_URL",
+    "M8FLOW_OIDC_CLIENT_ID": "SPIFFWORKFLOW_BACKEND_OPEN_ID_CLIENT_ID",
+    "M8FLOW_OIDC_CLIENT_SECRET": "SPIFFWORKFLOW_BACKEND_OPEN_ID_CLIENT_SECRET_KEY",
+    "M8FLOW_OIDC_IS_AUTHORITY_FOR_GROUPS": "SPIFFWORKFLOW_BACKEND_OPEN_ID_IS_AUTHORITY_FOR_USER_GROUPS",
+    "M8FLOW_WORKFLOW_ADMIN_GROUP": "SPIFFWORKFLOW_BACKEND_WORKFLOW_ADMIN_GROUP",
+    "M8FLOW_KEYCLOAK_ENABLE_CLIENT_AUTH": "KEYCLOAK_ENABLE_CLIENT_AUTH",
+
+    # ------------------------
+    # Celery / Redis
+    # ------------------------
+    "M8FLOW_CELERY_ENABLED": "SPIFFWORKFLOW_BACKEND_CELERY_ENABLED",
+    "M8FLOW_REDIS_BROKER_URL": "SPIFFWORKFLOW_BACKEND_CELERY_BROKER_URL",
+    "M8FLOW_REDIS_RESULT_BACKEND": "SPIFFWORKFLOW_BACKEND_CELERY_RESULT_BACKEND",
+    "M8FLOW_RUNNING_IN_CELERY_WORKER": "SPIFFWORKFLOW_BACKEND_RUNNING_IN_CELERY_WORKER",
+
+    # ------------------------
+    # Optional / advanced
+    # ------------------------
+    "M8FLOW_CONNECTOR_PROXY_URL": "SPIFFWORKFLOW_BACKEND_CONNECTOR_PROXY_URL",
+    "M8FLOW_MULTI_TENANCY_ENABLED": "MULTI_TENANCY_ENABLED",
+    "M8FLOW_PERMISSIONS_FILE": "SPIFFWORKFLOW_BACKEND_PERMISSIONS_FILE_NAME",
+}
+
+
+def apply_env_mapping():
+    for m8_key, spiff_key in M8FLOW_TO_SPIFF.items():
+        if m8_key in os.environ and spiff_key not in os.environ:
+            os.environ[spiff_key] = os.environ[m8_key]
